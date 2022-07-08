@@ -1,0 +1,37 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+import seaborn as sns
+
+df=pd.read_csv(r"C:\Users\DELL\Downloads\dataset-main\Life Expectancy Data.csv")
+
+df
+
+df.head()
+df.tail()
+
+df.info()
+df.describe()
+df.dropna(inplace=True)
+
+X=df.iloc[:,3:]    #independent variables (input variables)
+Y=df.iloc[:,2]      #dependent variable (output variable)
+
+X
+Y
+
+sns.heatmap(df.corr())
+
+from sklearn.model_selection import train_test_split
+Xtrain, Xtest, Ytrain, Ytest=train_test_split(X,Y,test_size=0.2,random_state=0)
+
+reg=linear_model.LinearRegression()
+
+reg.fit(Xtrain,Ytrain) #Creating model
+
+Y_pred=reg.predict(Xtest) #prediction of the model
+
+from sklearn.metrics import r2_score
+r2_S=r2_score(Ytest,Y_pred)
+print("The R square score for the linear model is :",r2_S)
